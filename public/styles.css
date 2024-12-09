@@ -17,7 +17,7 @@ header {
 }
 
 header img {
-    width: 100px; /* Adjust the size as needed */
+    width: 100px;
     margin-bottom: 20px;
 }
 
@@ -75,12 +75,12 @@ pre {
     background-color: #f7f7f7;
     padding: 0.5rem;
     border-radius: 5px;
-    overflow-x: auto;  /* Gir skrolling for lange kodelinjer */
+    overflow-x: auto;
 }
 
 code {
     font-family: 'Courier New', monospace;
-    color: #D23621;  /* En dyp rød farge for koden */
+    color: #D23621;
 }
 
 @media screen and (max-width: 768px) {
