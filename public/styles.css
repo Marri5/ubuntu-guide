@@ -8,7 +8,7 @@ body {
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #d66605;
     color: #fff;
     text-align: center;
     padding: 2rem 0;
@@ -41,7 +41,7 @@ h1 {
 h2 {
     margin-top: 2rem;
     font-size: 1.5rem;
-    border-bottom: 2px solid #4CAF50;
+    border-bottom: 2px solid #d66605;
     padding-bottom: 0.5rem;
 }
 
@@ -49,7 +49,7 @@ ol {
     list-style-type: none;
     margin-left: 1.5rem;
     padding-left: 1rem;
-    border-left: 2px dashed #4CAF50;
+    border-left: 2px dashed #d66605;
     counter-reset: list-counter;
 }
 
@@ -63,7 +63,7 @@ li:before {
     counter-increment: list-counter;
     position: absolute;
     left: -2rem;
-    color: #4CAF50;
+    color: #d66605;
     font-weight: bold;
 }
 
