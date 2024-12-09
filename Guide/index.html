@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubuntu & Apache Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header>
+    <img src="ubuntu-logo.png" alt="Ubuntu Logo">
+    <h1>Ubuntu & Apache Guide</h1>
+</header>
+
+    <main>
+        <section id="intro">
+            <p>Her er en trinnvis guide for å opprette en virtuell maskin, installere en Ubuntu-webserver, og sette opp Apache.</p>
+        </section>
+
+        <section id="vm-setup">
+            <h2>Trinn 1: vSphere</h2>
+            <ol>
+                <li><strong>Logg inn på vSphere Web Client</strong>
+                    <p>Åpne en nettleser, naviger til vSphere Web Client URLen, og logg inn med dine legitimasjoner.</p>
+                </li>
+                <li><strong>Naviger til riktig datalager</strong>
+                    <p>I navigasjonsruten til venstre, utvid datalagersenteret og deretter datalageret der du ønsker å opprette den virtuelle maskinen.</p>
+                </li>
+                <li><strong>Opprett en ny virtuell maskin</strong>
+                    <p>Høyreklikk på datalageret, velg `Ny virtuell maskin`, og følg trinnene for å konfigurere og opprette VMen.</p>
+                </li>
+                <li><strong>Start og installer Ubuntu på VM</strong>
+                    <p>Etter oppretting, skru på VM-en, åpne konsollen, og følg installasjonsinstruksjonene for Ubuntu.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section id="openssh-setup">
+            <h2>Trinn 2: Installere OpenSSH</h2>
+            <ol>
+                <li><strong>Oppdater pakkelisten</strong>
+                    <pre><code>sudo apt update</code></pre>
+                </li>
+                <li><strong>Installer OpenSSH-serverpakken</strong>
+                    <pre><code>sudo apt install openssh-server</code></pre>
+                </li>
+                <li><strong>Bekreft at SSH-tjenesten er aktiv</strong>
+                    <pre><code>sudo systemctl status ssh</code></pre>
+                </li>
+                <li><strong>(Valgfritt) Konfigurer SSH</strong>
+                    <p>Rediger SSH-konfigurasjonsfilen om nødvendig og husk å restarte SSH-tjenesten etterpå.</p>
+                </li>
+            </ol>
+        </section>
+        
+        <section id="apache-setup">
+            <h2>Trinn 3: Installere Apache 2</h2>
+            <ol>
+                <li><strong>Oppdater pakkelisten</strong>
+                    <pre><code>sudo apt update</code></pre>
+                </li>
+                <li><strong>Installer Apache 2-pakken</strong>
+                    <pre><code>sudo apt install apache2</code></pre>
+                </li>
+                <li><strong>Bekreft at Apache-tjenesten er aktiv</strong>
+                    <pre><code>sudo systemctl status apache2</code></pre>
+                </li>
+                <li><strong>Test Apache-serveren</strong>
+                    <p>Åpne en nettleser og naviger til din server-IP for å se Apache oppstarts-siden.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section id="guide-hosting">
+            <h2>Trinn 4: Hosting av nettsiden</h2>
+    <ol>
+        <li><strong>Plassering av nettsiden i riktig mappe</strong>
+            <p>For at Apache skal kunne serve din nettside, må nettsidens filer plasseres i `/var/www/html`.</p>
+            <p>Først, anta at alle nettsidefilene dine er i en mappe kalt `minside` på din lokale datamaskin. For å overføre denne mappen til serveren, kan du bruke `scp`:</p>
+            <pre><code>scp -r minside brukernavn@serveradresse:/var/www/html/</code></pre>
+        </li>
+        <li><strong>Gi riktige tillatelser</strong>
+            <p>For at Apache skal kunne lese og serve filene dine, må du sikre at de har riktige tillatelser:</p>
+            <pre><code>sudo chown -R www-data:www-data /var/www/html/minside</code></pre>
+        </li>
+        <li><strong>Opprett en VirtualHost for din nettside</strong>
+            <ol>
+                <li>Opprett en ny konfigurasjonsfil for din nettside:
+                    <pre><code>sudo nano /etc/apache2/sites-available/minside.conf</code></pre>
+                </li>
+                <li>Legg til følgende i `minside.conf`:
+                    <pre><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/minside
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;</code></pre>
+                </li>
+                <li>Aktiver din nye site-konfigurasjon:
+                    <pre><code>sudo a2ensite minside.conf</code></pre>
+                </li>
+                <li>Deaktiver standard konfigurasjonen:
+                    <pre><code>sudo a2dissite 000-default.conf</code></pre>
+                </li>
+                <li>Last inn Apache med de nye innstillingene:
+                    <pre><code>sudo systemctl reload apache2</code></pre>
+                </li>
+            </ol>
+        </li>
+        <li><strong>Test nettsiden</strong>
+            <p>Åpne en nettleser og besøk serverens IP-adresse eller domenenavn. Du skal nå se nettsiden din!</p>
+        </li>
+    </ol>
+</section>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
