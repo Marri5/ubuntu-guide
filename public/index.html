@@ -81,7 +81,7 @@
                 <li><strong>Plassering av nettsiden i riktig mappe</strong>
                     <p>For at Apache skal kunne serve din nettside, må nettsidens filer plasseres i `/var/www/html`.</p>
                     <p>Først, anta at alle nettsidefilene dine er i en mappe kalt `minside` på din lokale datamaskin. For å overføre denne mappen til serveren, kan du bruke `scp`:</p>
-                    <pre><code>scp -r minside brukernavn@serveradresse:/var/www/html/</code></pre>
+                    <pre><code>sudo scp -r minside /var/www/html/</code></pre>
                 </li>
                 <li><strong>Gi riktige tillatelser</strong>
                     <p>For at Apache skal kunne lese og serve filene dine, må du sikre at de har riktige tillatelser:</p>
