@@ -83,9 +83,24 @@ code {
     color: #D23621;
 }
 
+/* Style for images */
+main img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 @media screen and (max-width: 768px) {
     main {
         margin: 1rem;
         padding: 0.5rem;
+    }
+
+    main img {
+        margin: 0.5rem auto;
     }
 }
