@@ -77,45 +77,45 @@
 
         <section id="guide-hosting">
             <h2>Trinn 4: Hosting av nettsiden</h2>
-    <ol>
-        <li><strong>Plassering av nettsiden i riktig mappe</strong>
-            <p>For at Apache skal kunne serve din nettside, må nettsidens filer plasseres i `/var/www/html`.</p>
-            <p>Først, anta at alle nettsidefilene dine er i en mappe kalt `minside` på din lokale datamaskin. For å overføre denne mappen til serveren, kan du bruke `scp`:</p>
-            <pre><code>scp -r minside brukernavn@serveradresse:/var/www/html/</code></pre>
-        </li>
-        <li><strong>Gi riktige tillatelser</strong>
-            <p>For at Apache skal kunne lese og serve filene dine, må du sikre at de har riktige tillatelser:</p>
-            <pre><code>sudo chown -R www-data:www-data /var/www/html/minside</code></pre>
-        </li>
-        <li><strong>Opprett en VirtualHost for din nettside</strong>
             <ol>
-                <li>Opprett en ny konfigurasjonsfil for din nettside:
-                    <pre><code>sudo nano /etc/apache2/sites-available/minside.conf</code></pre>
+                <li><strong>Plassering av nettsiden i riktig mappe</strong>
+                    <p>For at Apache skal kunne serve din nettside, må nettsidens filer plasseres i `/var/www/html`.</p>
+                    <p>Først, anta at alle nettsidefilene dine er i en mappe kalt `minside` på din lokale datamaskin. For å overføre denne mappen til serveren, kan du bruke `scp`:</p>
+                    <pre><code>scp -r minside brukernavn@serveradresse:/var/www/html/</code></pre>
                 </li>
-                <li>Legg til følgende i `minside.conf`:
-                    <pre><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html/minside
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+                <li><strong>Gi riktige tillatelser</strong>
+                    <p>For at Apache skal kunne lese og serve filene dine, må du sikre at de har riktige tillatelser:</p>
+                    <pre><code>sudo chown -R www-data:www-data /var/www/html/minside</code></pre>
                 </li>
-                <li>Aktiver din nye site-konfigurasjon:
-                    <pre><code>sudo a2ensite minside.conf</code></pre>
+                <li><strong>Opprett en VirtualHost for din nettside</strong>
+                    <ol>
+                        <li>Opprett en ny konfigurasjonsfil for din nettside:
+                            <pre><code>sudo nano /etc/apache2/sites-available/minside.conf</code></pre>
+                        </li>
+                        <li>Legg til følgende i `minside.conf`:
+                            <pre><code>&lt;VirtualHost *:80&gt;
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/html/minside
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+        &lt;/VirtualHost&gt;</code></pre>
+                        </li>
+                        <li>Aktiver din nye site-konfigurasjon:
+                            <pre><code>sudo a2ensite minside.conf</code></pre>
+                        </li>
+                        <li>Deaktiver standard konfigurasjonen:
+                            <pre><code>sudo a2dissite 000-default.conf</code></pre>
+                        </li>
+                        <li>Last inn Apache med de nye innstillingene:
+                            <pre><code>sudo systemctl reload apache2</code></pre>
+                        </li>
+                    </ol>
                 </li>
-                <li>Deaktiver standard konfigurasjonen:
-                    <pre><code>sudo a2dissite 000-default.conf</code></pre>
-                </li>
-                <li>Last inn Apache med de nye innstillingene:
-                    <pre><code>sudo systemctl reload apache2</code></pre>
+                <li><strong>Test nettsiden</strong>
+                    <p>Åpne en nettleser og besøk serverens IP-adresse eller domenenavn. Du skal nå se nettsiden din!</p>
                 </li>
             </ol>
-        </li>
-        <li><strong>Test nettsiden</strong>
-            <p>Åpne en nettleser og besøk serverens IP-adresse eller domenenavn. Du skal nå se nettsiden din!</p>
-        </li>
-    </ol>
-</section>
+        </section>
     </main>
     <script src="script.js"></script>
 </body>
